@@ -6,6 +6,5 @@ Get files from repository
 
 Add files to repository
     git add [file name or use -A to add everything in the folder]
-    git commit (a file will pop up, save commit message in it)
+    git commit -m (a file will pop up, save commit message in it)
     git push origin master
-
