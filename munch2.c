@@ -2,7 +2,7 @@
 #include <ctype.h>
 #include <string.h>
 
-int main ()
+void munch2 ()
 {
     char inputString[] = "Hello World";
     char *input = inputString;
@@ -12,5 +12,4 @@ int main ()
         input = input + (sizeof(char));
     }
     printf("%s", inputString);
-    return 0;
 }
