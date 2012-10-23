@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
-#include "q.h"
 
 void * munch2 (sq** q)
 {

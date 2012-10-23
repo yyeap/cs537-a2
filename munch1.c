@@ -1,7 +1,6 @@
 #include <string.h>
 #include <stdio.h>
 #include <strings.h>
-#include "q.h"
 
 void * munch1 (sq** q){
     /*get string from q0 */
