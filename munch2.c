@@ -3,11 +3,11 @@
 #include <string.h>
 #include "q.h"
 
-void munch2 (sq *q2, sq *q3)
+void * munch2 (sq** q)
 {
     /* get string from the queue */
     char *inputString, *curr;
-    inputString = sq_deq(q2);
+    inputString = sq_deq(q[1]);
 
     if (NULL == inputString){
         printf("ERROR: Input is empty.");
@@ -21,5 +21,7 @@ void munch2 (sq *q2, sq *q3)
         curr = curr + (sizeof(char));
     }
     /* push modified string to the queue */
-    sq_enq(q3, inputString);
+    sq_enq(q[2], inputString);
+
+    return NULL;
 }

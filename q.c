@@ -1,13 +1,15 @@
 #include "q.h"
 #include <stdio.h>
 #include <stdlib.h>
-
 #define MAX_SIZE 10
 
 void sq_init(sq* q)
 {
-  char* new_array[MAX_SIZE];
-  q->data = new_array;
+  if(NULL == (q->data = (char**)malloc(MAX_SIZE * 64 * sizeof(char))))
+  {
+    printf("Error initializing queue.\n");
+    return;
+  }
   q->head = 0;
   q->size = 0;
   q->done = 0;
@@ -43,7 +45,7 @@ void* sq_deq(sq* q)
   /*indicate that space for an element was opened*/
   sem_post(&q->open);
 
-  return q->data[loc];
+  return (void*)q->data[loc];
 }
 
 int sq_isEmpty(sq* q)

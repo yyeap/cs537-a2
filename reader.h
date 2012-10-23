@@ -1,3 +1,3 @@
 #include "q.h"
 
-void reader (sq *q);
+void * reader (sq** q);

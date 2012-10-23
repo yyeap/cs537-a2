@@ -3,10 +3,10 @@
 #include <strings.h>
 #include "q.h"
 
-void munch1 (sq *q1, sq *q2){
-    /*get string from q1 */
+void * munch1 (sq** q){
+    /*get string from q0 */
     char *str, *curr;
-    str = sq_deq(q1);
+    str = sq_deq(q[0]);
 
     if (NULL == str){
         printf("ERROR: Failed to get string from q1.");
@@ -19,8 +19,8 @@ void munch1 (sq *q1, sq *q2){
         curr = index(str, ' ');
     }
 
-    /* put string on q2 */
-    sq_enq(q2, str);
-    return;
+    /* put string on q1 */
+    sq_enq(q[1], str);
+    return NULL;
 }
 

@@ -4,13 +4,18 @@
 
 #define ARRAY_SIZE 64
 
-void reader(sq *q1){
+void * reader(sq** q){
     FILE *in;
+<<<<<<< HEAD
+    char* inputString;
+=======
     char *inputString;
+>>>>>>> d52cd5e17e88ed001ebe71d0b46d1f734ef46799
     char c;
     int count, errFlag = 0;
 
     while (!feof(in)){
+	inputString = (char*)malloc(ARRAY_SIZE*sizeof(char));
         printf("Enter string: ");
         in = stdin;
         count = 0;
@@ -53,9 +58,15 @@ void reader(sq *q1){
             /* null terminate inputString */
             inputString[count] = '\0';
             /* send string to queue */
-            sq_enq(q1, inputString);
+            sq_enq(q[0], inputString);
         }
     }
+<<<<<<< HEAD
+    fclose(in);
+
+    return NULL;
+=======
     fclose(in); /* close buffer stream */
     sq_enq(q1, "\x04"); /* send end of transmission character to signal EOF */
+>>>>>>> d52cd5e17e88ed001ebe71d0b46d1f734ef46799
 }
