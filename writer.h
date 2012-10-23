@@ -1,3 +1,3 @@
 #include "q.h"
 
-void writer (sq *q3);
+void writer (sq **q);
