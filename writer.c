@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <pthread.h>
-#include "q.h"
+#include "writer.h"
 
 void* writer(sq **q){
     int count = 0;
