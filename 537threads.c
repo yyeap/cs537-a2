@@ -55,13 +55,13 @@ int main(int argc, char **argv)
     printf("Could not join munch1\n");
     return -1;
   }
-  
+
   if(pthread_join(thr[2], NULL))
   {
     printf("Could not join munch2\n");
     return -1;
   }
-  
+
   if(pthread_join(thr[3], NULL))
   {
     printf("Could not join writer\n");
@@ -69,7 +69,7 @@ int main(int argc, char **argv)
   }
 
   /* destroy synchronized queues */
-  i = 0;
+  int i = 0;
   while(i < QUEUES)
   {
     sq_destroy(q[i]);
