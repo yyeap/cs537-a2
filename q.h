@@ -1,3 +1,5 @@
+#include <semaphore.h>
+
 typedef struct {
   char** data;
   int head;
@@ -8,8 +10,10 @@ typedef struct {
 
 extern void sq_init(sq* q);
 
-extern void sq_enq(sq* q, void *new_item);
+extern void sq_enq(sq* q, char* new_item);
 
 extern void* sq_deq(sq* q);
 
 extern int sq_isEmpty(sq* q);
+
+extern void sq_destroy(sq* q);
