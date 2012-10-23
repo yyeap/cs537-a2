@@ -10,18 +10,20 @@ void sq_init(sq* q)
   q->data = new_array;
   q->head = 0;
   q->size = 0;
-
   sem_init(&q->open, 0, MAX_SIZE);
   sem_init(&q->filled, 0, 0);
 }
 
 void sq_enq(sq* q, char* new_item)
 {
+  /*wait for space for an element*/
   sem_wait(&q->open);
 
+  /*enqueue the new item*/
   q->data[q->head + q->size % MAX_SIZE] = new_item;
   q->size++;
 
+  /*indicate that a space was filled*/
   sem_post(&q->filled); 
 }
 
@@ -29,15 +31,18 @@ void* sq_deq(sq* q)
 {
   int loc;
 
+  /*wait for an available item*/
   sem_wait(&q->filled);
 
+  /*dequeue the item*/
   loc = q->head;
   q->size--;
   q->head = (q->head + 1) % MAX_SIZE;
 
+  /*indicate that space for an element was opened*/
   sem_post(&q->open);
 
-  return q->data[loc]; /*return popped pointer*/
+  return q->data[loc];
 }
 
 int sq_isEmpty(sq* q)
