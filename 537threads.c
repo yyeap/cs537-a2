@@ -7,36 +7,80 @@
 #include "writer.h"
 
 #define THREADS 4
-#define BUFFERS 3
+#define QUEUES 3
 
 int main(int argc, char **argv)
 {
   pthread_t thr[THREADS];
+  int i = 0;
 
-  if(pthread_create(&thr[0], NULL, &reader, NULL))
+  /* create synchronized queues */
+  while(i < QUEUES)
   {
-      printf("Could not create reader\n");
-      return -1;
+    sq q[i] = (sq*)malloc(sizeof(sq));
+    i++;
   }
 
-  if(pthread_create(&thr[1], NULL, &munch1, NULL))
+  /* create threads */
+  if(pthread_create(thr[0], NULL, &reader, q))
   {
-      printf("Could not create munch1\n");
-      return -1;
+    printf("Could not create reader\n");
+    return -1;
   }
 
-  if(pthread_create(&thr[2], NULL, &munch2, NULL))
+  if(pthread_create(thr[1], NULL, &munch1, q))
   {
-      printf("Could not create munch2\n");
-      return -1;
+    printf("Could not create munch1\n");
+    return -1;
   }
 
-  if(pthread_create(&thr[3], NULL, &writer, NULL))
+  if(pthread_create(thr[2], NULL, &munch2, q))
   {
-      printf("Could not create writer\n");
-      return -1;
+    printf("Could not create munch2\n");
+    return -1;
   }
-  pthread_join(thr[3]);
+
+  if(pthread_create(thr[3], NULL, &writer, q))
+  {
+    printf("Could not create writer\n");
+    return -1;
+  }
+
+  /* join threads */
+  if(pthread_join(thr[0], NULL))
+  {
+    printf("Could not join reader\n");
+    return -1;
+  }
+
+  if(pthread_join(thr[1], NULL))
+  {
+    printf("Could not join munch1\n");
+    return -1;
+  }
+  
+  if(pthread_join(thr[2], NULL))
+  {
+    printf("Could not join munch2\n");
+    return -1;
+  }
+  
+  if(pthread_join(thr[3], NULL))
+  {
+    printf("Could not join writer\n");
+    return -1;
+  }
+
+  /* destroy synchronized queues */
+  i = 0;
+  while(i < QUEUES)
+  {
+    sq_destroy(q[i]);
+    free(q[i]);
+    i--;
+  }
+
+  /* exit */
   pthread_exit(NULL);
   return 0;
 }

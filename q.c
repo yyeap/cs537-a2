@@ -10,6 +10,7 @@ void sq_init(sq* q)
   q->data = new_array;
   q->head = 0;
   q->size = 0;
+  q->done = 0;
   sem_init(&q->open, 0, MAX_SIZE);
   sem_init(&q->filled, 0, 0);
 }
@@ -55,4 +56,14 @@ void sq_destroy(sq* q)
   sem_destroy(&q->open);
   sem_destroy(&q->filled);
   free(q);
+}
+
+void sq_done(sq* q)
+{
+  q->done = 1;
+}
+
+int sq_isDone(sq* q)
+{
+  return q->done;
 }

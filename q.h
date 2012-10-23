@@ -4,6 +4,7 @@ typedef struct {
   char** data;
   int head;
   int size;
+  int done;
   sem_t open;
   sem_t filled;
 } sq;
@@ -55,3 +56,22 @@ extern int sq_isEmpty(sq* q);
 * in: q - sq* - a sq pointer to the given queue
 */
 extern void sq_destroy(sq* q);
+
+/* 
+* sq_done
+*
+* sets the queue's 'done' flag to 1
+*
+* in: q - sq* - a sq pointer to the given queue
+*/
+extern void sq_done(sq* q);
+
+/* 
+* sq_isDone
+*
+* returns queue's 'done' flag value
+*
+* in: q - sq* - a sq pointer to the given queue
+* return: value of 'done'
+*/
+int sq_isDone(sq* q);
