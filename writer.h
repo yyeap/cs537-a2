@@ -1,3 +1,3 @@
-/*#include "q.h"*/
+#include "synchq.h"
 
 void* writer (sq **q);

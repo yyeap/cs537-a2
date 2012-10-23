@@ -10,7 +10,7 @@ void * munch1 (sq** q){
 
     if (NULL == str){
         printf("ERROR: Failed to get string from q1.");
-        return;
+        return NULL;
     }
     curr = index(str, ' ');
 

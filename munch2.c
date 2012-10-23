@@ -11,7 +11,7 @@ void * munch2 (sq** q)
 
     if (NULL == inputString){
         printf("ERROR: Input is empty.");
-        return;
+        return NULL;
     }
 
     curr = inputString;

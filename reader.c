@@ -57,8 +57,6 @@ void * reader(sq** q){
             sq_enq(q[0], inputString);
         }
     }
-    fclose(in);
-    return NULL;
     fclose(in); /* close buffer stream */
-    sq_enq(q1, "\x04"); /* send end of transmission character to signal EOF */
+    return NULL;
 }
