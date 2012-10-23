@@ -1,6 +1,6 @@
 #include <semaphore.h>
 
-typedef struct {
+typedef struct synchq {
   char** data;
   int head;
   int size;

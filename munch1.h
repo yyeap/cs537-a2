@@ -1,3 +1,3 @@
-#include "q.h"
+/*#include "q.h"*/
 
 void * munch1 (sq** q);

@@ -1,6 +1,6 @@
-#include "q.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "synchq.h"
 #define MAX_SIZE 10
 
 void sq_init(sq* q)
