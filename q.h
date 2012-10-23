@@ -9,7 +9,7 @@ typedef struct {
   sem_t filled;
 } sq;
 
-/* 
+/*
 * sq_init
 *
 * initializes the given queue
@@ -18,7 +18,7 @@ typedef struct {
 */
 extern void sq_init(sq* q);
 
-/* 
+/*
 * sq_enq
 *
 * performs the enqueue operation on a given queue
@@ -28,7 +28,7 @@ extern void sq_init(sq* q);
 */
 extern void sq_enq(sq* q, char* new_item);
 
-/* 
+/*
 * sq_deq
 *
 * performs the dequeue operation on a given queue
@@ -38,7 +38,7 @@ extern void sq_enq(sq* q, char* new_item);
 */
 extern void* sq_deq(sq* q);
 
-/* 
+/*
 * sq_isEmpty
 *
 * performs the dequeue operation on a given queue
@@ -48,7 +48,7 @@ extern void* sq_deq(sq* q);
 */
 extern int sq_isEmpty(sq* q);
 
-/* 
+/*
 * sq_destroy
 *
 * destroys the given queue
@@ -57,7 +57,7 @@ extern int sq_isEmpty(sq* q);
 */
 extern void sq_destroy(sq* q);
 
-/* 
+/*
 * sq_done
 *
 * sets the queue's 'done' flag to 1
@@ -66,7 +66,7 @@ extern void sq_destroy(sq* q);
 */
 extern void sq_done(sq* q);
 
-/* 
+/*
 * sq_isDone
 *
 * returns queue's 'done' flag value
@@ -74,4 +74,4 @@ extern void sq_done(sq* q);
 * in: q - sq* - a sq pointer to the given queue
 * return: value of 'done'
 */
-int sq_isDone(sq* q);
+extern int sq_isDone(sq* q);

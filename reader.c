@@ -1,11 +1,12 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "q.h"
 
 #define ARRAY_SIZE 64
 
 void reader(sq *q1){
     FILE *in;
-    char inputString[ARRAY_SIZE];
+    char *inputString;
     char c;
     int count, errFlag = 0;
 
@@ -14,6 +15,7 @@ void reader(sq *q1){
         in = stdin;
         count = 0;
         errFlag = 0;
+        inputString = (char*)malloc(ARRAY_SIZE * sizeof(char));
 
         c = fgetc(in);
         /* if there is an error in reading stdin, handle it */
@@ -54,5 +56,6 @@ void reader(sq *q1){
             sq_enq(q1, inputString);
         }
     }
-    fclose(in);
+    fclose(in); /* close buffer stream */
+    sq_enq(q1, "\x04"); /* send end of transmission character to signal EOF */
 }
