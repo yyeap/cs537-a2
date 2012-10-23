@@ -5,7 +5,7 @@
 #include "munch1.h"
 #include "munch2.h"
 #include "writer.h"
-#include "q.h"
+/* #include "q.h" */
 
 #define THREADS 4
 #define QUEUES 3
@@ -19,25 +19,25 @@ int main(int argc, char **argv)
   sq* q[2] = (sq*)malloc(sizeof(sq));
 
   /* create threads */
-  if(pthread_create(&thr[0], NULL, &reader, q))
+  if(pthread_create(&thr[0], NULL, &reader, (void*)q))
   {
     printf("Could not create reader\n");
     return -1;
   }
 
-  if(pthread_create(&thr[1], NULL, &munch1, q))
+  if(pthread_create(&thr[1], NULL, &munch1, (void*)q))
   {
     printf("Could not create munch1\n");
     return -1;
   }
 
-  if(pthread_create(&thr[2], NULL, &munch2, q))
+  if(pthread_create(&thr[2], NULL, &munch2, (void*)q))
   {
     printf("Could not create munch2\n");
     return -1;
   }
 
-  if(pthread_create(&thr[3], NULL, &writer, q))
+  if(pthread_create(&thr[3], NULL, &writer, (void*)q))
   {
     printf("Could not create writer\n");
     return -1;
@@ -74,7 +74,7 @@ int main(int argc, char **argv)
   {
     sq_destroy(q[i]);
     free(q[i]);
-    i--;
+    i++;
   }
 
   /* exit */
