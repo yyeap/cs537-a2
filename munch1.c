@@ -4,7 +4,7 @@
 
 void munch1 ()
 {
-    char struct[] = "he ef efwe f";
+    char str[] = "he ef efwe f";
     char *curr = index(str, ' ');
 
     while (NULL != curr){
