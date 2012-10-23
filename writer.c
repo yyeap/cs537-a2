@@ -4,7 +4,7 @@
 #include <pthread.h>
 #include "q.h"
 
-void writer(sq **q){
+void* writer(sq **q){
     int count = 0;
     char *inputString;
 
@@ -17,5 +17,5 @@ void writer(sq **q){
     }
     /* after end of file */
     printf("Total number of lines: %d", count);
-    pthread_exit(0);
+    return NULL;
 }
