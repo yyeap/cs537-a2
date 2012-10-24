@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <strings.h>
 #include "munch1.h"
+#include "synchq.h"
 
 void *munch1 (void* q)
 {

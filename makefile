@@ -1,7 +1,7 @@
 TARGET = 537threads
 LIBS = -lpthread -lrt
 CC = gcc
-CFLAGS = -g -Wall -pedantic -Q -v -a
+CFLAGS = -g -Wall -pedantic
 
 .PHONY: clean all default
 

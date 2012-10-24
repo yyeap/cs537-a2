@@ -3,6 +3,7 @@
 #include <string.h>
 #include <pthread.h>
 #include "writer.h"
+#include "synchq.h"
 
 void* writer(void *q){
     sq** queues = (sq**)q; /* cast to array of queues */

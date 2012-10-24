@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "reader.h"
+#include "synchq.h"
 
 #define ARRAY_SIZE 64
 
