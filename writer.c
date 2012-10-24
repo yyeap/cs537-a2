@@ -4,13 +4,14 @@
 #include <pthread.h>
 #include "writer.h"
 
-void* writer(sq **q){
+void* writer(void *q){
+    sq** queues = (sq**)q; /* cast to array of queues */
     int count = 0;
     char *inputString;
 
     /* while not end of file, keep dequeue and print output */
-    while (!sq_isDone(q[2])){
-        inputString = sq_deq(q[2]);
+    while (!sq_isDone(queues[2])){
+        inputString = sq_deq(queues[2]);
         printf("%s", inputString);
         count++;
         free(inputString); /* frees up buffer */
