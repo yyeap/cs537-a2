@@ -12,7 +12,7 @@ void * reader(void *q){
     int count, errFlag = 0;
 
     /* keep getting input if not EOF */
-    while (!feof(in) || !sq_isDone(queues[0])){
+    while (!feof(in)){
         printf("Enter string: ");
         in = stdin;
         count = 0;
@@ -21,7 +21,7 @@ void * reader(void *q){
 
         c = fgetc(in);
         /* if there is an error in reading stdin, handle it */
-        if (!ferror(in)){
+        if (ferror(in)){
             printf("ERROR: Failed to read stdin.");
             continue;
         }
@@ -39,11 +39,12 @@ void * reader(void *q){
             }
             /* write current character to array */
             else {
-                inputString[count++] = c;
+                inputString[count] = c;
+                count++;
                 /* get the next input character */
                 c = fgetc(in);
                 /* validate next input character */
-                if(!ferror(in)){
+                if(ferror(in)){
                     printf("ERROR: Failed to read stdin.");
                     errFlag = 1;
                     break;
