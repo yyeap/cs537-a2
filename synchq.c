@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "synchq.h"
+#include <semaphore.h>
 #define MAX_SIZE 10
 
 void sq_init(sq* q)
@@ -19,6 +20,7 @@ void sq_init(sq* q)
 
 void sq_enq(sq* q, char* new_item)
 {
+printf("got into enq\n");
   /*wait for space for an element*/
   sem_wait(&q->open);
 
@@ -32,16 +34,17 @@ void sq_enq(sq* q, char* new_item)
 
 void* sq_deq(sq* q)
 {
+printf("got into deq\n");
   int loc;
-
+printf("deq: before waiting sem filled\n");
   /*wait for an available item*/
   sem_wait(&q->filled);
-
+printf("deq: after waiting sem filled\n");
   /*dequeue the item*/
   loc = q->head;
   q->size--;
   q->head = (q->head + 1) % MAX_SIZE;
-
+printf("deq: update head success\n");
   /*indicate that space for an element was opened*/
   sem_post(&q->open);
 
