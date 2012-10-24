@@ -5,7 +5,7 @@
 
 void sq_init(sq* q)
 {
-  if(NULL == (q->data = (char**)malloc(MAX_SIZE * 64 * sizeof(char))))
+  if(NULL == (q->data = (char**)malloc(MAX_SIZE * sizeof(char*))))
   {
     printf("Error initializing queue.\n");
     return;
@@ -23,11 +23,11 @@ void sq_enq(sq* q, char* new_item)
   sem_wait(&q->open);
 
   /*enqueue the new item*/
-  q->data[q->head + q->size % MAX_SIZE] = new_item;
+  q->data[(q->head + q->size) % MAX_SIZE] = new_item;
   q->size++;
 
   /*indicate that a space was filled*/
-  sem_post(&q->filled); 
+  sem_post(&q->filled);
 }
 
 void* sq_deq(sq* q)

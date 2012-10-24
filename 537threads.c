@@ -15,6 +15,7 @@ int main(int argc, char **argv)
   int i;
   pthread_t thr[THREADS];
   void* q[QUEUES];
+
   q[0] = (sq*)malloc(sizeof(sq));
   q[1] = (sq*)malloc(sizeof(sq));
   q[2] = (sq*)malloc(sizeof(sq));

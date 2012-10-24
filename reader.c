@@ -13,8 +13,8 @@ void * reader(void *q){
     loop for input one line at a time
     loop inside this loop for each character individually
   */
-  
-  while (!feof(in)  && !ferror(in)) 
+
+  while (!feof(in)  && !ferror(in))
   {
     /*
       create array to hold input
@@ -29,10 +29,11 @@ void * reader(void *q){
     if(NULL == (input = (char*)malloc(ARRAY_SIZE * sizeof(char))))
     {
       printf("ERROR: Failure to allocate input buffer.\n");
+      return NULL;
     }
-    
+
     /*loop for character*/
-    while (!lineComplete && !nullErr) 
+    while (!lineComplete && !nullErr)
     {
       c = fgetc(in);
       if (EOF == c)
@@ -44,10 +45,12 @@ void * reader(void *q){
       {
         nullErr = 1;
       }
-      else if ('\n' == c) 
+      else if ('\n' == c)
       {
-	lineComplete = 1;
-      } else if(count < ARRAY_SIZE) {
+        lineComplete = 1;
+      }
+      else if(count < ARRAY_SIZE)
+      {
         input[count] = c;
         count++;
       }
@@ -58,6 +61,7 @@ void * reader(void *q){
       sq_enq(queues[0], input);
     }
   }
+  sq_done(queues[0]);
   fclose(in);
   exit(1);
 }
