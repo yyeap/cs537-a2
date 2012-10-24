@@ -3,6 +3,7 @@ Yuen Lye Yeap
 Lee Yerkes
 
 Files:
+
 537threads.c
 reader.c
 reader.h
@@ -12,7 +13,7 @@ munch2.c
 munch2.h
 writer.c
 writer.h
-q.h
-q.c
+synchq.h
+synchq.c
 
-Compiled and ran on mumble-WORKSTATION NUMBER.
+Compiled and ran on mumble-14.

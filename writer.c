@@ -7,7 +7,6 @@
 
 void* writer(void *q)
 {
-
     sq** queues = (sq**)q; /* cast to array of queues */
     int count = 0;
     char *inputString;
