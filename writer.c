@@ -17,6 +17,6 @@ void* writer(void *q){
         free(inputString); /* frees up buffer */
     }
     /* after end of file */
-    printf("Total number of lines: %d", count);
+    printf("Total number of lines: %d\n", count);
     return NULL;
 }
