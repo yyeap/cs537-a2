@@ -1,3 +1,3 @@
 #include "synchq.h"
 
-void * reader (sq** q);
+void * reader (void*);
