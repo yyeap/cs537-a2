@@ -1,6 +1,7 @@
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <semaphore.h>
 #include "reader.h"
 #include "munch1.h"
 #include "munch2.h"
@@ -8,17 +9,24 @@
 #include "synchq.h"
 
 #define THREADS 4
-#define QUEUES 3
+#define QUEUES 4
 
 int main(int argc, char **argv)
 {
   int i;
   pthread_t thr[THREADS];
   void* q[QUEUES];
+  sem_t input_ready;
 
   q[0] = (sq*)malloc(sizeof(sq));
+  sq_init(q[0]);
   q[1] = (sq*)malloc(sizeof(sq));
+  sq_init(q[1]);
   q[2] = (sq*)malloc(sizeof(sq));
+  sq_init(q[2]);
+  
+  sem_init(&input_ready, 0, 1);
+  q[3] = &input_ready;
 
   /* create threads */
   if(pthread_create(&thr[0], NULL, &reader, q))
@@ -70,16 +78,16 @@ int main(int argc, char **argv)
     return -1;
   }
 
-  /* destroy synchronized queues */
+  /* destroy synchronized queues and input semaphore */
   i = 0;
-  while(i < QUEUES)
+  while(i < 3)
   {
     sq_destroy(q[i]);
     free((void*)q[i]);
     i++;
   }
+  sem_destroy(q[3]);
+  free((void*)q[3]);
 
-  /* exit */
-  pthread_exit(NULL);
   return 0;
 }
