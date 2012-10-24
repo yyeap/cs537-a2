@@ -12,6 +12,7 @@
 
 int main(int argc, char **argv)
 {
+  int i;
   pthread_t thr[THREADS];
   sq* q[QUEUES];
   q[0] = (sq*)malloc(sizeof(sq));
@@ -69,7 +70,7 @@ int main(int argc, char **argv)
   }
 
   /* destroy synchronized queues */
-  int i = 0;
+  i = 0;
   while(i < QUEUES)
   {
     sq_destroy(q[i]);
