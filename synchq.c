@@ -14,34 +14,52 @@ void sq_init(sq* q)
   q->head = 0;
   q->size = 0;
   q->done = 0;
-  sem_init(&q->open, 0, MAX_SIZE);
-  sem_init(&q->filled, 0, 0);
+
+  if(0 > sem_init(&q->open, 0, MAX_SIZE))
+  {
+    printf("Error initializing sem open\n");
+    return;
+  }
+  if (0 > sem_init(&q->filled, 0, 0))
+  {
+    printf("Error initializing sem filled\n");
+    return;
+  }
+  if (0 > sem_init(&q->mutex, 0, 1))
+  {
+    printf("Error initializing sem mutex\n");
+    return;
+  }
 }
 
 void sq_enq(sq* q, char* new_item)
 {
-  /*wait for space for an element*/
-  sem_wait(&q->open);
+  sem_wait(&q->open); /*wait for space for an element*/
+  sem_wait(&q->mutex); /*enter critical section*/
 
   /*enqueue the new item*/
   q->data[(q->head + q->size) % MAX_SIZE] = new_item;
   q->size++;
 
   /*indicate that a space was filled*/
+  sem_post(&q->mutex); /*leave critical section*/
   sem_post(&q->filled);
 }
 
 void* sq_deq(sq* q)
 {
   int loc;
-  /*wait for an available item*/
-  sem_wait(&q->filled);
+  
+  sem_wait(&q->filled); /*wait for an available item*/
+  sem_wait(&q->mutex); /*enter critical section*/
+
   /*dequeue the item*/
   loc = q->head;
   q->size--;
   q->head = (q->head + 1) % MAX_SIZE;
-  /*indicate that space for an element was opened*/
-  sem_post(&q->open);
+ 
+  sem_post(&q->mutex); /*leave critical section*/
+  sem_post(&q->open); /*indicate that space for an element was opened*/
 
   return (void*)q->data[loc];
 }
@@ -52,7 +70,8 @@ int sq_isEmpty(sq* q)
 }
 
 void sq_destroy(sq* q)
-{
+{ 
+  sem_destroy(&q->mutex);
   sem_destroy(&q->open);
   sem_destroy(&q->filled);
   free(q);

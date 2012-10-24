@@ -7,6 +7,7 @@ typedef struct synchq {
   int done;
   sem_t open;
   sem_t filled;
+  sem_t mutex;
 } sq;
 
 /*

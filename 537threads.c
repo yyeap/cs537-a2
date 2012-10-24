@@ -18,14 +18,24 @@ int main(int argc, char **argv)
   void* q[QUEUES];
   sem_t input_ready;
 
-  q[0] = (sq*)malloc(sizeof(sq));
-  sq_init(q[0]);
-  q[1] = (sq*)malloc(sizeof(sq));
-  sq_init(q[1]);
-  q[2] = (sq*)malloc(sizeof(sq));
-  sq_init(q[2]);
-  
-  sem_init(&input_ready, 0, 1);
+  /* initialize queues */
+  i = 0;
+  while (i < QUEUES - 1)
+  {
+    if (NULL == (q[i] = (sq*)malloc(sizeof(sq))))
+    {
+        printf("Error initializing queue.\n");
+        return -1;
+    }
+    sq_init(q[i]);
+    i++;
+  }
+
+  if(0 > sem_init(&input_ready, 0, 1))
+  {
+    printf("Error initializing semaphore\n");
+    return -1;
+  }
   q[3] = &input_ready;
 
   /* create threads */
@@ -88,6 +98,6 @@ int main(int argc, char **argv)
   }
   sem_destroy(q[3]);
   free((void*)q[3]);
-
+  pthread_exit(NULL);
   return 0;
 }
