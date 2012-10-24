@@ -1,4 +1,4 @@
-TARGET = 537thread
+TARGET = 537threads
 LIBS = -lpthread -lrt
 CC = gcc
 CFLAGS = -g -Wall -pedantic 
