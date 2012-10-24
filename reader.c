@@ -5,61 +5,59 @@
 #define ARRAY_SIZE 64
 
 void * reader(void *q){
-    sq **queues = (sq**)q; /* cast to array of queues */
-    FILE *in;
-    char* inputString;
-    char c;
-    int count, errFlag = 0;
+  sq **queues = (sq**)q; /* cast to array of queues */
+  FILE *in;
+  char *input, c;
+  int count, nullErr, atEOF, lineComplete;
+  /*
+    loop for input one line at a time
+    loop inside this loop for each character individually
+  */
+  
+  while (!feof(in)  && !ferror(in)) 
+  {
+    /*
+      create array to hold input
+      create flags and counters
+    */
+    in = stdin;
+    count = 0;
+    nullErr = 0;
+    atEOF = 0;
+    lineComplete = 0;
 
-    /* keep getting input if not EOF */
-    while (!feof(in)){
-        printf("Enter string: ");
-        in = stdin;
-        count = 0;
-        errFlag = 0;
-        inputString = (char*)malloc(ARRAY_SIZE * sizeof(char));
-
-        c = fgetc(in);
-        /* if there is an error in reading stdin, handle it */
-        if (ferror(in)){
-            printf("ERROR: Failed to read stdin.");
-            continue;
-        }
-
-        while ('\n' != c){
-            /* if there is a null byte, discard input */
-            if ('\0' == c){
-                printf("ERROR: Null byte found. Discard input");
-                errFlag = 1; /* set error flag to true */
-                break;
-            }
-            /* discard further input if string size > 63 */
-            else if (count > 62){
-                ;
-            }
-            /* write current character to array */
-            else {
-                inputString[count] = c;
-                count++;
-                /* get the next input character */
-                c = fgetc(in);
-                /* validate next input character */
-                if(ferror(in)){
-                    printf("ERROR: Failed to read stdin.");
-                    errFlag = 1;
-                    break;
-                }
-            }
-        }
-        /* only add valid input to the queue */
-        if (!errFlag){
-            /* null terminate inputString */
-            inputString[count] = '\0';
-            /* send string to queue */
-            sq_enq(queues[0], inputString);
-        }
+    if(NULL == (input = (char*)malloc(ARRAY_SIZE * sizeof(char))))
+    {
+      printf("ERROR: Failure to allocate input buffer.\n");
     }
-    fclose(in); /* close buffer stream */
-    sq_done(queues[0]); /* set done flag to 1 */
-    return NULL;
+    
+    /*loop for character*/
+    while (!lineComplete && !nullErr) 
+    {
+      c = fgetc(in);
+      if (EOF == c)
+      {
+        lineComplete = 1;
+        /*SOMETHING ELSE*/
+      }
+      else if ('\0' == c)
+      {
+        nullErr = 1;
+      }
+      else if ('\n' == c) 
+      {
+	lineComplete = 1;
+      } else if(count < ARRAY_SIZE) {
+        input[count] = c;
+        count++;
+      }
+    }
+    if(!nullErr)
+    {
+      input[count] = '\0';
+      sq_enq(queues[0], input);
+    }
+  }
+  fclose(in);
+  exit(1);
 }
