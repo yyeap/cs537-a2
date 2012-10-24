@@ -1,3 +1,6 @@
+#ifndef SYNCHQ_H
+#define SYNCHQ_H
+  
 #include <semaphore.h>
 
 typedef struct synchq {
@@ -75,3 +78,4 @@ extern void sq_done(sq* q);
 * return: value of 'done'
 */
 extern int sq_isDone(sq* q);
+#endif#
