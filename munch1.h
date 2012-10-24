@@ -1,3 +1,3 @@
 #include "synchq.h"
 
-void * munch1 (sq** q);
+void * munch1 (void* q);
